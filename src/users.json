@@ -1,0 +1,22 @@
+[
+    {
+      "id": "1",
+      "email": "fruitcaptain@fruitstore.com",
+      "plan": "Premium"
+    },
+    {
+      "id": "2",
+      "email": "holla@yaboy.com",
+      "plan": "Free"
+    },
+    {
+      "id": "3",
+      "email": "nervousshopper@cheapskate.com",
+      "plan": "Free"
+    },
+    {
+      "id": "4",
+      "email": "eyebrowse@nevergonnabuy.com",
+      "plan": "Free"
+    }
+]
