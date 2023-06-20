@@ -1,25 +1,19 @@
 import { useContext } from "react";
 import { Button, Container, Row } from "react-bootstrap";
-import { trackEvent } from "../amplitude";
 import Cart from "./Cart";
 import FruitMenu from "./FruitMenu";
 import OrderCompleted from "./OrderCompleted";
 import { AppContext } from "../store";
-import { calculateTotal } from "../util";
-import { AppState, User } from "../types";
+
+import { AppState } from "../types";
 
 export default function FruitStore() {
   const {
-    appState: { user, cart, completedCheckout },
+    appState: { cart, completedCheckout },
     setAppState,
   } = useContext(AppContext);
 
   function checkout() {
-    trackEvent(user as User, "Checkout", {
-      total: calculateTotal(cart),
-      cart,
-    });
-
     setAppState((prevState: AppState) => ({
       ...prevState,
       completedCheckout: true,

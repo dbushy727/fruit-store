@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { trackEvent } from "../amplitude";
+
 import { AppContext } from "../store";
-import { AppState, CartItem, Fruit, User } from "../types";
+import { AppState, CartItem, Fruit } from "../types";
 
 const useAddToCart = () => {
   const { appState, setAppState } = useContext(AppContext);
@@ -41,13 +41,8 @@ const useAddToCart = () => {
 
   function addToCart(fruit: Fruit) {
     const {
-      user,
       cart: { items },
     } = appState;
-
-    trackEvent(user as User, "Add To Cart", {
-      fruit: fruit.name,
-    });
 
     const cartItemIndex = items.findIndex(
       (item: CartItem) => item.fruit.name === fruit.name
