@@ -1,8 +1,14 @@
 import { Button, ListGroup } from "react-bootstrap";
-import { Fruit } from "../types";
+import { Fruit, User } from "../types";
 import useAddToCart from "../hooks/useAddToCart";
+import { trackEvent } from "../amplitude";
+import { useContext } from "react";
+import { AppContext } from "../store";
 
 export default function FruitMenu() {
+  const {
+    appState: { user },
+  } = useContext(AppContext);
   const { addToCart } = useAddToCart();
   const fruits: Fruit[] = [
     {
@@ -36,7 +42,16 @@ export default function FruitMenu() {
           <p className="p-3 m-0 align-items-center">
             <strong>${fruit.price.toFixed(2)}</strong>
           </p>
-          <Button onClick={() => addToCart(fruit)}>+</Button>
+          <Button
+            onClick={() => {
+              trackEvent(user as User, "Add to cart", {
+                item: fruit.name,
+              });
+              addToCart(fruit);
+            }}
+          >
+            +
+          </Button>
         </ListGroup.Item>
       ))}
     </ListGroup>
