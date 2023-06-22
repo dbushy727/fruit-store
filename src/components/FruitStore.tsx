@@ -4,12 +4,13 @@ import Cart from "./Cart";
 import FruitMenu from "./FruitMenu";
 import OrderCompleted from "./OrderCompleted";
 import { AppContext } from "../store";
-
-import { AppState } from "../types";
+import { AppState, User } from "../types";
+import { trackEvent } from "../amplitude";
+import { calculateTotal } from "../util";
 
 export default function FruitStore() {
   const {
-    appState: { cart, completedCheckout },
+    appState: { cart, completedCheckout, user },
     setAppState,
   } = useContext(AppContext);
 
@@ -18,6 +19,12 @@ export default function FruitStore() {
       ...prevState,
       completedCheckout: true,
     }));
+
+    trackEvent(user as User, "Checkout", {
+      total: calculateTotal(cart),
+      items: cart.items.map((item) => item.fruit.name),
+      itemCount: cart.items.length,
+    });
   }
 
   return (
